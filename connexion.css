@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    padding: 1em;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+td:not(:last-child) {
+    padding-right: 0.5em;
+}
+
+tr:last-child > td {
+    padding-top: 0.5em;
+}
+
+button {
+    float: right;
+}

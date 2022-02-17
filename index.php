@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Projet</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="connexion.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </head>
@@ -11,16 +11,21 @@
 
     <form action="connexion.php" method="post">
 
-        <label for="pseudo">Pseudo</label>
-        <input type="text" placeholder="Entrer son pseudo" name="pseudo" required><br>
-      
-        <label for="password">Mot de passe</label>
-        <input type="password" placeholder="Entrer son mot de passe" name="password" required><br>
-
-        <button type="submit">Connexion</button><br>
-
-        <a href="inscription_form.php">S'inscrire</a>
-
+        <table>
+            <tr>
+                <td><label for="pseudo">Pseudo</label></td>
+                <td><input type="text" placeholder="Entrer son pseudo" name="pseudo" required></td>
+            </tr>
+            <tr>
+                <td><label for="password">Mot de passe</label></td>
+                <td><input type="password" placeholder="Entrer son mot de passe" name="password" required></td>
+            </tr>
+            <tr>
+                <td><a href="inscription_form.php">S'inscrire</a></td>
+                <td><button type="submit">Connexion</button></td>
+            </tr>
+        </table>
+        
     </form>
 
 </body>
