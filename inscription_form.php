@@ -19,6 +19,9 @@
 
         <table>
             <tr>
+                <th colspan="2">Inscription</th>
+            </tr>
+            <tr>
                 <td><label for="pseudo">Pseudo</label></td>
                 <td><input type="text" placeholder="Entrer son pseudo" name="pseudo" required></td>
             </tr>

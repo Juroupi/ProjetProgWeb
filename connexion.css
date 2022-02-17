@@ -20,12 +20,20 @@ form {
     border-radius: 5px;
 }
 
+th {
+    text-align: center;
+}
+
 td:not(:last-child) {
     padding-right: 0.5em;
 }
 
 tr:last-child > td {
     padding-top: 0.5em;
+}
+
+tr:first-child > th {
+    padding-bottom: 0.5em;
 }
 
 button {
