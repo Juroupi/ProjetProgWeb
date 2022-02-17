@@ -1,0 +1,14 @@
+[
+    {
+        "pseudo": "a",
+        "password": "b"
+    },
+    {
+        "pseudo": "lo",
+        "password": "lb"
+    },
+    {
+        "pseudo": "salut",
+        "password": "non"
+    }
+]
