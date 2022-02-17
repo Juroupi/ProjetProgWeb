@@ -30,8 +30,8 @@
                 <td><input type="password" placeholder="Entrer son mot de passe" name="password" required></td>
             </tr>
             <tr>
-                <td><a href="inscription_form.php">S'inscrire</a></td>
-                <td><button type="submit">Connexion</button></td>
+                <td><a href="inscription_form.php">Inscription</a></td>
+                <td><button type="submit">Se connecter</button></td>
             </tr>
         </table>
         
