@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<?php
+    if (isset($_GET["identifiants_invalides"])) {
+        echo "<script>window.onload = () => alert('Identifiants invalides');</script>";
+    }
+?>
+
     <form action="connexion.php" method="post">
 
         <table>

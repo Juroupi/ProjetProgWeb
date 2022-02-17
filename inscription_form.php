@@ -11,7 +11,7 @@
 
 <?php
     if (isset($_GET["deja_utilise"])) {
-        echo "deja utilise<br>";
+        echo "<script>window.onload = () => alert('Pseudo déjà utilisé');</script>";
     }
 ?>
 
