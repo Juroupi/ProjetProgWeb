@@ -1,0 +1,7 @@
+fopen
+flock
+fread
+
+ftruncate
+fseek
+fwrite

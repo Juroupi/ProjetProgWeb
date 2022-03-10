@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>Connexion</title>
     <link rel="stylesheet" href="connexion.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js"></script>
 </head>
 <body>
 
@@ -22,8 +20,8 @@
                 <th colspan="2">Connexion</th>
             </tr>
             <tr>
-                <td><label for="pseudo">Pseudo</label></td>
-                <td><input type="text" placeholder="Entrer son pseudo" name="pseudo" required></td>
+                <td><label for="username">Pseudo</label></td>
+                <td><input type="text" placeholder="Entrer son pseudo" name="username" required></td>
             </tr>
             <tr>
                 <td><label for="password">Mot de passe</label></td>

@@ -1,16 +1,18 @@
 <?php
 
-    if (isset($_POST["pseudo"]) && isset($_POST["password"])) {
+    if (isset($_POST["username"]) && isset($_POST["password"])) {
 
-        $nom =$_POST["pseudo"];
+        $nom =$_POST["username"];
         $pass = $_POST["password"];
 
-        $json_string = file_get_contents('log.json');
+        $json_string = file_get_contents('data/log.json');
         $data = json_decode($json_string, true);
 
         foreach ($data as $etu) {
-            if($etu['pseudo'] == $nom && $etu['password'] == $pass) {
-                header("Location: jeu.html");
+            if($etu['username'] == $nom && $etu['password'] == $pass) {
+                session_start();
+                $_SESSION["username"] = $nom;
+                header("Location: profile.php");
                 return;
             }  
         }

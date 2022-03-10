@@ -1,0 +1,95 @@
+html, body {
+    font-family: sans-serif;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+body > div:nth-child(2) {
+    display: flex;
+    flex-grow: 3;
+}
+
+#tapis {
+    background-color: white;
+    flex-grow: 3;
+    flex-shrink: 0;
+}
+
+#joueur_haut, #joueur_bas, #joueur_gauche, #joueur_droite {
+    flex-grow: 1;
+    display: flex;
+    flex-shrink: 0;
+}
+
+#joueur_haut > .cartes, #joueur_bas > .cartes, #joueur_gauche > .cartes, #joueur_droite > .cartes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+#joueur_gauche .carte, #joueur_droite .carte {
+    height: 50px;
+}
+
+#joueur_haut .carte, #joueur_bas .carte {
+    width: 50px;
+}
+
+.carte {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#joueur_bas .carte:hover {
+    z-index: 100;
+    /*transform: translateY(-50px);*/
+}
+
+#joueur_haut {
+    background-color: red;
+}
+
+#joueur_haut img {
+    transform: rotate(180deg);
+}
+
+#joueur_bas {
+    background-color: blue;
+}
+
+#joueur_gauche {
+    background-color: green;
+}
+
+#joueur_gauche img {
+    transform: rotate(90deg);
+}
+
+#joueur_gauche > .cartes {
+    flex-direction: column;
+}
+
+#joueur_droite {
+    background-color: yellow;
+}
+
+#joueur_droite img {
+    transform: rotate(-90deg);
+}
+
+#joueur_droite > .cartes {
+    flex-direction: column;
+}
