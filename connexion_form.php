@@ -2,22 +2,22 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Inscription</title>
+    <title>Connexion</title>
     <link rel="stylesheet" href="connexion.css">
 </head>
 <body>
 
 <?php
-    if (isset($_GET["deja_utilise"])) {
-        echo "<script>window.onload = () => alert('Pseudo déjà utilisé');</script>";
+    if (isset($_GET["identifiants_invalides"])) {
+        echo "<script>window.onload = () => alert('Identifiants invalides');</script>";
     }
 ?>
 
-    <form action="inscription.php" method="post">
+    <form action="connexion.php" method="post">
 
         <table>
             <tr>
-                <th colspan="2">Inscription</th>
+                <th colspan="2">Connexion</th>
             </tr>
             <tr>
                 <td><label for="username">Pseudo</label></td>
@@ -28,11 +28,11 @@
                 <td><input type="password" placeholder="Entrer son mot de passe" name="password" required></td>
             </tr>
             <tr>
-                <td><a href="connexion_form.php">Connexion</a></td>
-                <td><button type="submit">S'inscrire</button></td>
+                <td><a href="inscription_form.php">Inscription</a></td>
+                <td><button type="submit">Se connecter</button></td>
             </tr>
         </table>
-
+        
     </form>
 
 </body>

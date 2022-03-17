@@ -1,6 +1,7 @@
 [
     {
         "name": "partie1",
-        "players": 3
+        "players": 3,
+        "mode": "UNO"
     }
 ]

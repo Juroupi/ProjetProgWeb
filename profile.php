@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["username"]) || !isset($_SESSION["id"])) {
+        header("Location: index.php");
+        exit;
+    }
+
+    $rooms = json_decode(file_get_contents('data/rooms.json'), true);
+    $modes = json_decode(file_get_contents('data/modes.json'), true);
+?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -8,12 +19,7 @@
 </head>
 <body>
 
-    <h1 id="username">
-        <?php
-            session_start();
-            echo $_SESSION["username"];
-        ?>
-    </h1>
+    <h1 id="username"><?php echo $_SESSION["username"]; ?></h1>
         
     <div id="content">
 
@@ -21,29 +27,38 @@
             <h2>Historique</h2>
         </div>
 
+        <span class="vsep"></span>
+
         <div id="game">
 
-            <div id="create-game" action="/action_page.php">
+            <form id="create-game" action="/create_game.php">
                 <h2>Créer une partie</h2>
-                <form id="create-game-form" action="/action_page.php">
-                    <div>
-                        <label for="room-name">Nom de la salle :</label>
-                        <input type="text" name="room-name">
-                    </div>
-                    <input type="submit" value="Créer">
-                </form>
-            </div>
+                <table>
+                    <tr>
+                        <td><label for="game-mode">Mode de jeu :</label></td>
+                        <td><input type="text" name="game-mode" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="room-name">Nom de la salle :</label></td>
+                        <td><input type="text" name="room-name" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;"><input type="submit" value="Créer"></td>
+                    </tr>
+                </table>
+            </form>
+
+            <span class="hsep"></span>
 
             <div id="join-game">
                 <h2>Rejoindre une partie</h2>
-                <div id="rooms-list">
+                <div id="room-list">
                     <?php
-                        $json_string = file_get_contents('data/rooms.json');
-                        $rooms = json_decode($json_string, true);
-
                         foreach ($rooms as $room) {
-                            echo "<div class='room'>";
-                            echo "<a class='room-name' href='game.php?room=" . $room["name"] . "'>" . $room["name"] . "</a>";
+                            echo "<div class='room clickable'>";
+                            echo    "<img class='icon' src='data/icons/" . $room["mode"] . ".png'>";
+                            echo    "<span class='name'>" . $room["name"] . "</span>";
+                            echo    "<span class='players'>" . $room["players"] . " / " . $modes[$room["mode"]]["limit"] . "</span>";
                             echo "</div>";
                         }
                     ?>

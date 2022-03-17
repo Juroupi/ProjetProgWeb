@@ -3,6 +3,7 @@ html, body {
     margin: 0;
     width: 100%;
     height: 100%;
+    font-size: 1.1em;
 }
 
 * {
@@ -12,43 +13,150 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 h1, h2 {
     text-align: center;
 }
 
+*::selection {
+    background: lightgrey;
+}
+
+input {
+    font-size: inherit !important;
+}
+
+input[type=submit] {
+    padding: 0.2em 1.5em;
+}
+
+.clickable, input {
+    border: 0.175em black solid;
+    background: white;
+}
+
+.clickable:hover, input[type=submit]:hover, input:focus {
+    outline: 0.1em black solid;
+}
+
+.clickable, input[type=submit] {
+    cursor: pointer;
+}
+
 #content {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
+    width: 100%;
+    max-width: 80em;
 }
 
 #history {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    flex-shrink: 0;
+    width: 15em;
+    max-width: 25%;
+    min-width: 10em;
+    height: 100%;
+    align-items: center;
 }
 
 #game {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow: hidden;
+    align-items: center;
+    height: 100%;
 }
 
 #create-game {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-}
-
-#create-game-form {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 1.5em;
+}
+
+tr:not(:last-child) > td {
+    padding-bottom: 1em;
+}
+
+td:not(:last-child) {
+    padding-right: 0.5em;
 }
 
 #join-game {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+}
+
+#room-list {
+    overflow: hidden;
+    width: 50%;
+    max-width: 30em;
+    min-width: 15em;
+    display: flex;
+    flex-direction: column;
+    padding: 0.2em;
+}
+
+#room-list:hover {
+    overflow: auto;
+}
+
+#room-list .room {
+    padding: 0.25em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.75em;
+    width: 100%;
+    height: 3.5em;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+
+#room-list .room > * {
+    margin-right: 1em;
+}
+
+#room-list .room .icon {
+    border: 0.175em black solid;
+    height: 100%;
+    width: auto;
+    user-select: none;
+    pointer-events: none;
+}
+
+#room-list .room .name {
+    flex-grow: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#room-list .room .players {
+    flex-shrink: 0;
+}
+
+.hsep, .vsep {
+    background: black;
+    border-radius: 5px;
+}
+
+.hsep {
+    width: 75%;
+    height: 0.175em;
+}
+
+.vsep {
+    height: 95%;
+    width: 0.175em;
 }

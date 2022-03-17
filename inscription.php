@@ -15,12 +15,16 @@
             }  
         }
 
-        array_push($data, [ 'username' => $nom, 'password' => $pass ]);
+        $id = uniqid("", true);
+
+        array_push($data, [ 'username' => $nom, 'password' => $pass, 'id' => $id ]);
 
         file_put_contents("data/log.json", json_encode($data, JSON_PRETTY_PRINT));
 
-        header("Location: jeu.html");
+        session_start();
+        $_SESSION["username"] = $nom;
+        $_SESSION["id"] = $id;
     }
 
-    echo "erreur";
+    header("Location: index.php");
 ?>

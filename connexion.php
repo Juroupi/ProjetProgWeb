@@ -12,6 +12,7 @@
             if($etu['username'] == $nom && $etu['password'] == $pass) {
                 session_start();
                 $_SESSION["username"] = $nom;
+                $_SESSION["id"] = $id;
                 header("Location: profile.php");
                 return;
             }  
