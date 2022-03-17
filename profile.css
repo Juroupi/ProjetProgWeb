@@ -20,11 +20,20 @@ h1, h2 {
     text-align: center;
 }
 
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 *::selection {
     background: lightgrey;
 }
 
-input {
+select {
+    width: 100%;
+}
+
+input, select {
     font-size: inherit !important;
 }
 
@@ -32,17 +41,32 @@ input[type=submit] {
     padding: 0.2em 1.5em;
 }
 
-.clickable, input {
+.clickable, input, select, a {
     border: 0.175em black solid;
     background: white;
 }
 
-.clickable:hover, input[type=submit]:hover, input:focus {
+.clickable:hover, input[type=submit]:hover, input:focus, select:focus, a:hover {
     outline: 0.1em black solid;
 }
 
 .clickable, input[type=submit] {
     cursor: pointer;
+}
+
+#topbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#username {
+    flex-grow: 1;
+}
+
+#disconnect {
+    padding: 0.5em 0.5em;
+    margin-left: 1em;
 }
 
 #content {
@@ -73,7 +97,7 @@ input[type=submit] {
     height: 100%;
 }
 
-#create-game {
+#create-room {
     display: flex;
     flex-direction: column;
     justify-content: center;

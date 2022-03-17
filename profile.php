@@ -19,7 +19,16 @@
 </head>
 <body>
 
-    <h1 id="username"><?php echo $_SESSION["username"]; ?></h1>
+<?php
+    if (isset($_GET["deja_utilise"])) {
+        echo "<script>window.onload = () => alert('Nom déjà utilisé');</script>";
+    }
+?>
+
+    <div id="topbar">
+        <a id="disconnect" href="index.php?deconnecte">Se déconnecter</a>
+        <h1 id="username"><?php echo $_SESSION["username"]; ?></h1>
+    </div>
         
     <div id="content">
 
@@ -31,12 +40,18 @@
 
         <div id="game">
 
-            <form id="create-game" action="/create_game.php">
+            <form id="create-room" action="create_room.php">
                 <h2>Créer une partie</h2>
                 <table>
                     <tr>
                         <td><label for="game-mode">Mode de jeu :</label></td>
-                        <td><input type="text" name="game-mode" required></td>
+                        <td><select name="game-mode" required>
+                            <?php
+                                foreach ($modes as $name => $mode) {
+                                    echo "<option value='" . $name . "'>" . $name . "</option>";
+                                }
+                            ?>
+                        </select></td>
                     </tr>
                     <tr>
                         <td><label for="room-name">Nom de la salle :</label></td>
@@ -55,11 +70,11 @@
                 <div id="room-list">
                     <?php
                         foreach ($rooms as $room) {
-                            echo "<div class='room clickable'>";
+                            echo "<a class='room' href='game.php?id=" . $room["id"] . "'>";
                             echo    "<img class='icon' src='data/icons/" . $room["mode"] . ".png'>";
                             echo    "<span class='name'>" . $room["name"] . "</span>";
                             echo    "<span class='players'>" . $room["players"] . " / " . $modes[$room["mode"]]["limit"] . "</span>";
-                            echo "</div>";
+                            echo "</a>";
                         }
                     ?>
                 </div>

@@ -31,7 +31,7 @@ body > div:nth-child(2) {
     flex-shrink: 0;
 }
 
-#joueur_haut > .cartes, #joueur_bas > .cartes, #joueur_gauche > .cartes, #joueur_droite > .cartes {
+#joueur_haut > .cartes, #joueur_bas > .cartes, #joueur_gauche > .cartes, #joueur_droite > .cartes, #tapis > .pioche {
     display: flex;
     align-items: center;
     justify-content: center;
