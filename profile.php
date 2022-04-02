@@ -14,6 +14,7 @@
 <head>
     <meta charset="utf-8">
     <title>Profil</title>
+    <link rel="stylesheet" href="menu.css">
     <link rel="stylesheet" href="profile.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -26,7 +27,7 @@
 ?>
 
     <div id="topbar">
-        <a id="disconnect" href="index.php?deconnecte">Se déconnecter</a>
+        <a class="clickable" id="disconnect" href="index.php?deconnecte">Se déconnecter</a>
         <h1 id="username"><?php echo $_SESSION["username"]; ?></h1>
     </div>
         
@@ -70,7 +71,7 @@
                 <div id="room-list">
                     <?php
                         foreach ($rooms as $room) {
-                            echo "<a class='room' href='game.php?id=" . $room["id"] . "'>";
+                            echo "<a class='room clickable' href='join_room.php?room-id=" . $room["id"] . "'>";
                             echo    "<img class='icon' src='data/icons/" . $room["mode"] . ".png'>";
                             echo    "<span class='name'>" . $room["name"] . "</span>";
                             echo    "<span class='players'>" . $room["players"] . " / " . $modes[$room["mode"]]["limit"] . "</span>";

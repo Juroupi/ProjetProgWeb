@@ -7,8 +7,13 @@
         $name = $_GET["room-name"];
         $mode = $_GET["game-mode"];
 
-        $json_string = file_get_contents('data/rooms.json');
-        $rooms = json_decode($json_string, true);
+        $rooms = json_decode(file_get_contents('data/rooms.json'), true);
+        $modes = json_decode(file_get_contents('data/modes.json'), true);
+
+        if (!isset($modes[$mode])) {
+            header("Location: profile.php?mode_invalide");
+            return;
+        }
 
         foreach ($rooms as $room) {
             if($room['name'] == $name) {
@@ -30,6 +35,6 @@
     }
 
     else {
-        header("Location: profile.php");
+        header("Location: index.php");
     }
 ?>

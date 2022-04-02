@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Inscription</title>
+    <link rel="stylesheet" href="menu.css">
     <link rel="stylesheet" href="connexion.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
     }
 ?>
 
-    <form action="inscription.php" method="post">
+    <form class="border" action="inscription.php" method="post">
 
         <table>
             <tr>
