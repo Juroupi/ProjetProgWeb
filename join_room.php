@@ -29,6 +29,12 @@
                     file_put_contents($room_filename, json_encode($room_content, JSON_PRETTY_PRINT));
                 }
 
+                if (isset($_SESSION["room-id"]) && $_SESSION["room-id"] != $roomid) {
+                    include "leave_room.php";
+                }
+
+                $_SESSION["room-id"] = $roomid;
+
                 header("Location: game.php?id=" . $roomid);
 
                 return;

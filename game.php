@@ -1,7 +1,8 @@
 <?php
+
     session_start();
 
-    if (!isset($_GET["id"]) || !isset($_SESSION["username"]) || !isset($_SESSION["id"])) {
+    if (!isset($_GET["id"]) || !isset($_SESSION["username"]) || !isset($_SESSION["id"]) || !ctype_alnum($_GET["id"])) {
         header("Location: profile.php");
         exit;
     }

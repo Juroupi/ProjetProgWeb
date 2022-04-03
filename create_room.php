@@ -31,6 +31,12 @@
 
         file_put_contents("data/rooms/" . $roomid . ".json", '{ "players": { "' . $playerid . '": {} } }');
 
+        if (isset($_SESSION["room-id"])) {
+            include "leave_room.php";
+        }
+
+        $_SESSION["room-id"] = $roomid;
+
         header("Location: game.php?id=" . $roomid);
     }
 

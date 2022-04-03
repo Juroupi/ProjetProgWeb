@@ -21,12 +21,12 @@
                 <th colspan="2">Connexion</th>
             </tr>
             <tr>
-                <td><label for="username">Pseudo</label></td>
-                <td><input type="text" placeholder="Entrer son pseudo" name="username" required></td>
+                <td><label for="username">Pseudo :</label></td>
+                <td><input type="text" name="username" required></td>
             </tr>
             <tr>
-                <td><label for="password">Mot de passe</label></td>
-                <td><input type="password" placeholder="Entrer son mot de passe" name="password" required></td>
+                <td><label for="password">Mot de passe :</label></td>
+                <td><input type="password" name="password" required></td>
             </tr>
             <tr>
                 <td><a href="inscription_form.php">Inscription</a></td>
