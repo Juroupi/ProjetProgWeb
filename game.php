@@ -46,7 +46,7 @@
 
         <div id='tapis'>
             <div id='pioche'>
-                
+                <img src="cartes/card_back.png">
             </div>
             <div id='pile'>
 

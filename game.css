@@ -23,6 +23,7 @@ body > div:nth-child(2) {
     background-color: white;
     flex-grow: 3;
     flex-shrink: 0;
+    display: flex;
 }
 
 #joueur_haut, #joueur_bas, #joueur_gauche, #joueur_droite {
