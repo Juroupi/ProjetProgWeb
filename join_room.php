@@ -18,7 +18,8 @@
                 $room_content = json_decode(file_get_contents($room_filename), true);
 
                 $players_num = $rooms_infos[$i]["players"];
-                $players_lim = $modes[$rooms_infos[$i]["mode"]]["limit"];
+                $mode = $rooms_infos[$i]["mode"];
+                $players_lim = $modes[$mode]["limit"];
 
                 if (!isset($room_content["players"][$playerid]) && $players_num < $players_lim) {
 
@@ -36,7 +37,7 @@
                 $_SESSION["room-id"] = $roomid;
                 $_SESSION["cur-message"] = 0;
 
-                header("Location: game.php?id=" . $roomid);
+                header("Location: " . strtolower($mode) . "/game.php?id=" . $roomid);
 
                 return;
             }

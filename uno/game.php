@@ -3,15 +3,15 @@
     session_start();
 
     if (!isset($_GET["id"]) || !isset($_SESSION["username"]) || !isset($_SESSION["id"]) || !ctype_alnum($_GET["id"])) {
-        header("Location: profile.php");
+        header("Location: ../profile.php");
         exit;
     }
 
     $roomid = $_GET["id"];
 
-    $json_string = @file_get_contents('data/rooms/' . $roomid . '.json');
+    $json_string = @file_get_contents('../data/rooms/' . $roomid . '.json');
     if($json_string === FALSE) {
-        header("Location: profile.php");
+        header("Location: ../profile.php");
         exit;
     }
 

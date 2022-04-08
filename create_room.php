@@ -38,7 +38,7 @@
         $_SESSION["room-id"] = $roomid;
         $_SESSION["cur-message"] = 0;
 
-        header("Location: game.php?id=" . $roomid);
+        header("Location: " . strtolower($mode) . "/game.php?id=" . $roomid);
     }
 
     else {
