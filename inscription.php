@@ -6,8 +6,13 @@
     
     if (isset($_POST["username"]) && isset($_POST["password"])) {
 
-        $nom = $_POST["username"];
+        $nom = trim(strip_tags($_POST["username"]));
         $pass = password_hash($_POST["password"], PASSWORD_BCRYPT);
+
+        if(empty($nom)) {
+            header("Location: inscription_form.php?nom_invalide");
+            return;
+        } 
 
         $log_file = open_file('data/log.json');
         $data = get_file_content($log_file);

@@ -6,8 +6,8 @@
 
     if (isset($_POST["username"]) && isset($_POST["password"])) {
 
-        $nom = $_POST["username"];
-        $pass = $_POST["password"];
+        $nom = strip_tags($_POST["username"]);
+        $pass = strip_tags($_POST["password"]);
 
         $log_file = open_file("data/log.json");
         $data = get_file_content($log_file);

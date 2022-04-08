@@ -12,6 +12,9 @@
     if (isset($_GET["deja_utilise"])) {
         echo "<script>window.onload = () => alert('Pseudo déjà utilisé');</script>";
     }
+    if (isset($_GET["nom_invalide"])) {
+        echo "<script>window.onload = () => alert('Pseudo invalide');</script>";
+    }
 ?>
 
     <form class="border" action="inscription.php" method="post">

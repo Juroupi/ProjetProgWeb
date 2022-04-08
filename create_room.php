@@ -6,8 +6,13 @@
 
     if (isset($_SESSION["id"]) && isset($_GET["game-mode"]) && isset($_GET["room-name"])) {
 
-        $name = $_GET["room-name"];
-        $mode = $_GET["game-mode"];
+        $name = trim(strip_tags($_GET["room-name"]));
+        $mode = strip_tags($_GET["game-mode"]);
+
+        if (empty($name)) {
+            header("Location: profile.php?nom_invalide");
+            return;
+        }
 
         $rooms_file = open_file('data/rooms.json');
         $rooms = get_file_content($rooms_file);

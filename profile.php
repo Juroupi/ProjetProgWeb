@@ -28,6 +28,9 @@
     if (isset($_GET["deja_utilise"])) {
         echo "<script>window.onload = () => alert('Nom déjà utilisé');</script>";
     }
+    if (isset($_GET["nom_invalide"])) {
+        echo "<script>window.onload = () => alert('Nom invalide');</script>";
+    }
 ?>
 
     <div id="topbar">
