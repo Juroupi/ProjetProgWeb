@@ -1,11 +1,15 @@
 <?php
+    
+    include_once "files.php";
+
     session_start();
     if (!isset($_SESSION["username"]) || !isset($_SESSION["id"])) {
         header("Location: index.php");
         exit;
     }
 
-    $rooms = json_decode(file_get_contents('data/rooms.json'), true);
+    $rooms_file = open_file('data/rooms.json');
+    $rooms = get_file_content($rooms_file);
     $modes = json_decode(file_get_contents('data/modes.json'), true);
 ?>
 
@@ -87,3 +91,7 @@
 
 </body>
 </html>
+
+<?php
+    close_file($rooms_file);
+?>

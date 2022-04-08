@@ -2,22 +2,10 @@
 
     session_start();
 
-    if (!isset($_GET["id"]) || !isset($_SESSION["username"]) || !isset($_SESSION["id"]) || !ctype_alnum($_GET["id"])) {
+    if (!isset($_SESSION["username"]) || !isset($_SESSION["id"]) || !isset($_SESSION["room-id"])) {
         header("Location: ../profile.php");
         exit;
     }
-
-    $roomid = $_GET["id"];
-
-    $json_string = @file_get_contents('../data/rooms/' . $roomid . '.json');
-    if($json_string === FALSE) {
-        header("Location: ../profile.php");
-        exit;
-    }
-
-    $room = json_decode($json_string, true);
-
-    /* gérer room */
 ?>
 
 <!doctype html>

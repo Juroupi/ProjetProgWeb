@@ -1,4 +1,6 @@
 <?php
+    
+    include_once "files.php";
 
     session_start();
 
@@ -7,16 +9,20 @@
         $name = $_GET["room-name"];
         $mode = $_GET["game-mode"];
 
-        $rooms = json_decode(file_get_contents('data/rooms.json'), true);
+        $rooms_file = open_file('data/rooms.json');
+        $rooms = get_file_content($rooms_file);
+
         $modes = json_decode(file_get_contents('data/modes.json'), true);
 
         if (!isset($modes[$mode])) {
+            close_file($rooms_file);
             header("Location: profile.php?mode_invalide");
             return;
         }
 
         foreach ($rooms as $room) {
             if($room['name'] == $name) {
+                close_file($rooms_file);
                 header("Location: profile.php?deja_utilise");
                 return;
             }  
@@ -27,7 +33,9 @@
 
         array_push($rooms, [ 'name' => $name, 'mode' => $mode, 'players' => 1, 'id' => $roomid ]);
 
-        file_put_contents("data/rooms.json", json_encode($rooms, JSON_PRETTY_PRINT));
+        set_file_content($rooms_file, $rooms);
+
+        close_file($rooms_file);
 
         file_put_contents("data/rooms/" . $roomid . ".json", '{ "players": { "' . $playerid . '": {} } }');
 
@@ -38,7 +46,7 @@
         $_SESSION["room-id"] = $roomid;
         $_SESSION["cur-message"] = 0;
 
-        header("Location: " . strtolower($mode) . "/game.php?id=" . $roomid);
+        header("Location: " . strtolower($mode) . "/game.php");
     }
 
     else {
