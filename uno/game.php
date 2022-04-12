@@ -33,7 +33,7 @@
         </div>
 
         <div id='tapis'>
-            <div id='pioche'>
+            <div id='pioche' onclick="pioche()">
                 <img src="cartes/card_back.png">
             </div>
             <div id='pile'>
@@ -50,13 +50,18 @@
 
     <div id='joueur_bas'>
         <div class="cartes">
-                <div class="carte" onclick = "empile(this)"><img src="cartes/green_1.png" /></div>
-                <div class="carte" onclick = "empile(this)"><img src="cartes/red_3.png" /></div>
-                <div class="carte" onclick = "empile(this)"><img src="cartes/yellow_5.png" /></div>
-                <div class="carte" onclick = "empile(this)"><img src="cartes/green_2.png" /></div>
-                <div class="carte" onclick = "empile(this)"><img src="cartes/yellow_1.png" /></div>
-                <div class="carte" onclick = "empile(this)"><img src="cartes/red_4.png" /></div>
+
         </div>
+    </div>
+
+    <div id="chat">
+        <div id="messages">
+        </div>
+        <div>
+            <input id="message-input" type="text">
+            <button id="message-submit" onclick="envoyer_message()">Envoyer</button>
+        </div>
+        <div id="chat-toggle" onclick="toggleChat()">▼</div>
     </div>
 
 </body>

@@ -14,6 +14,23 @@
         $room_file = open_file($room_filename);
         $room = get_file_content($room_file);
 
+        if (!isset($room["pile"])) {
+            $room["pile"] = [];
+        }
+
+        if (!isset($room["messages"])) {
+            $room["messages"] = [];
+        }
+
+        if (!isset($room["players"][$playerid])) {
+            close_file($room_file);
+            exit;
+        }
+
+        if (!isset($room["players"][$playerid]["cards"])) {
+            $room["players"][$playerid]["cards"] = [];
+        }
+
         // envoyer un message
         if (isset($_REQUEST["message"])) {
 
@@ -21,9 +38,14 @@
                 $room["messages"] = [];
             }
 
-            array_push($room["messages"], [ $playername, strip_tags($_REQUEST["message"]) ]);
+            $content = strip_tags($_REQUEST["message"]);
 
-            set_file_content($room_file, $room);
+            if (count($content) > 0) {
+
+                array_push($room["messages"], [ $playername, $content ]);
+
+                set_file_content($room_file, $room);
+            }
         } 
         
         // récupérer les nouveaux messages
@@ -50,15 +72,11 @@
 
             $card = $_REQUEST["play-card"];
 
-            if ($card < count($room[$playerid]["cards"])) {
+            if ($card < count($room["players"][$playerid]["cards"])) {
 
-                if (!isset($room["pile"])) {
-                    $room["pile"] = [];
-                }
+                array_push($room["pile"], $room["players"][$playerid]["cards"][$card]);
 
-                array_push($room["pile"], $room[$playerid]["cards"][$card]);
-
-                array_splice($room[$playerid]["cards"], $card, 1);
+                array_splice($room["players"][$playerid]["cards"], $card, 1);
 
                 set_file_content($room_file, $room);
             }
@@ -74,7 +92,7 @@
 
                 $colors = array("blue", "green", "red", "yellow");
 
-                for ($colors as $color) {
+                foreach ($colors as $color) {
                     array_push($room["deck"], $color . "_0");
                     for ($i = 0; $i < 2; $i++) {
                         for ($n = 1; $n <= 9; $n++) {
@@ -87,24 +105,51 @@
                     array_push($room["deck"], "wild_pick_four");
                     array_push($room["deck"], "wild_color_changer");
                 }
+
+                shuffle($room["deck"]);
             }
 
             // si la pioche est vide, on la remplie avec la pile (à tester)
-            else if (empty($room["deck"])) {
-                $room["deck"] = array_slice($room["pile"], 0, -1);
-                array_splice($room["pile"], -1, 1);
+            else if (empty($room["deck"]) && count($room["pile"]) > 1) {
+                $room["deck"] = array_slice($room["pile"], -1);
+                $room["pile"] = [ $room["pile"][count($room["pile"]) - 1] ];
             }
 
-            array_push($room[$playerid]["cards"], $room["deck"][0]);
-
-            array_splice($room["deck"], 0, 1);
+            // on retire la carte de la pioche et on la donne au joueur
+            if (!empty($room["deck"])) {
+                array_push($room["players"][$playerid]["cards"], $room["deck"][0]);
+                array_splice($room["deck"], 0, 1);
+            }
 
             set_file_content($room_file, $room);
         }
 
         // récupérer l'état du jeu
         else if (isset($_REQUEST["cards"])) {
-            echo '{ "top": ' . $room["pile"][count($room["pile"]) - 1] . ', "cards": ' . json_encode($room[$playerid]["cards"]) . ' }';
+
+            $top = "empty";
+            if (count($room["pile"]) > 0) {
+                $top = $room["pile"][count($room["pile"]) - 1];
+            }
+
+            $others = [];
+            foreach ($room["players"] as $otherid => $otherplayer) {
+
+                if ($otherid != $playerid) {
+
+                    if (!isset($otherplayer["cards"])) {
+                        $otherplayer["cards"] = [];
+                    }
+
+                    array_push($others, count($otherplayer["cards"]));
+                }
+            }
+
+            echo '{';
+            echo '"top": "' . $top . '", ';
+            echo '"cards": ' . json_encode($room["players"][$playerid]["cards"]) . ', ';
+            echo '"others": ' . json_encode($others);
+            echo '}';
         }
 
         close_file($room_file);

@@ -5,5 +5,6 @@ clean:
 	echo "[]" > data/log.json
 
 chmod:
+	chmod 777 data/
 	chmod 666 data/rooms.json
 	chmod 666 data/log.json
