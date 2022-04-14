@@ -82,9 +82,11 @@ function update_messages() {
         dataType: "json",
         data: {"new-messages": "" }
     }).done(function(messages) {
+        let message_list = $("#messages");
         messages.forEach(message => {
-            $("#messages").append("<div class='message'><span class='message-id'>" + message[0] + "</span><span class='message-content'>" + message[1] + "</span></div>");
+            message_list.append("<div class='message'><span class='message-id'>" + message[0] + "</span><span class='message-content'>" + message[1] + "</span></div>");
         });
+        message_list.scrollTop(message_list[0].scrollHeight)
     });
 }
 
