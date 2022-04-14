@@ -8,9 +8,15 @@
         exit;
     }
 
+    $player_id = $_SESSION["id"];
+
     $rooms_file = open_file('data/rooms.json');
     $rooms = get_file_content($rooms_file);
+
     $modes = json_decode(file_get_contents('data/modes.json'), true);
+
+    $player_file = open_file('data/users/' . $player_id . '.json');
+    $player = get_file_content($player_file);
 ?>
 
 <!doctype html>
@@ -42,6 +48,20 @@
 
         <div id="history">
             <h2>Historique</h2>
+            <div id="history-list">
+                <?php
+                    for ($i = count($player["history"]) - 1; $i >= 0; $i--) {
+                        $entry = $player["history"][$i];
+                        echo "<div class='history-entry border'>";
+                        echo    "<img class='icon' src='data/icons/" . $entry["mode"] . ".png'>";
+                        echo    "<div class='infos'>";
+                        echo        "<span class='name'>" . $entry["room-name"] . "</span>";
+                        echo        "<span class='time'>" . $entry["time"] . "</span>";
+                        echo    "</div>";
+                        echo "</div>";
+                    }
+                ?>
+            </div>
         </div>
 
         <span class="vsep"></span>
@@ -96,5 +116,6 @@
 </html>
 
 <?php
+    close_file($player_file);
     close_file($rooms_file);
 ?>

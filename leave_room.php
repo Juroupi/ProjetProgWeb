@@ -47,5 +47,9 @@
         }
 
         close_file($rooms_file4);
+
+        if (isset($_REQUEST["redirect"])) {
+            header("Location: profile.php");
+        }
     }
 ?>

@@ -14,26 +14,28 @@
     <meta charset="utf-8">
     <title>Jeu</title>
     <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="../menu.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="game.js" defer></script>
 </head>
 <body>
 
-    <div id='joueur_haut'>
-        <div class="cartes">
-                
-        </div>
-    </div>
+    <div id="game-grid">
+        
+        <div></div>
 
-    <div>
+        <div id='joueur_haut'>
+            
+        </div>
+
+        <div></div>
+
         <div id='joueur_gauche'>
-            <div class="cartes">
-                
-            </div>
+            
         </div>
 
-        <div id='tapis'>
-            <div id='pioche' onclick="pioche()">
+        <div id='tapis' class="border">
+            <div class="carte" id='pioche' onclick="pioche()">
                 <img src="cartes/card_back.png">
             </div>
             <div id='pile'>
@@ -42,19 +44,19 @@
         </div>
 
         <div id='joueur_droite'>
-            <div class="cartes">
-                
-            </div>
+            
         </div>
+
+        <div></div>
+
+        <div id='joueur_bas'>
+            
+        </div>
+
+        <div></div>
     </div>
 
-    <div id='joueur_bas'>
-        <div class="cartes">
-
-        </div>
-    </div>
-
-    <div id="chat">
+    <div id="chat" class="border">
         <div id="messages">
         </div>
         <div>
@@ -63,6 +65,8 @@
         </div>
         <div id="chat-toggle" onclick="toggleChat()">▼</div>
     </div>
+
+    <a id="leave-button" class="clickable" href="../leave_room.php?redirect" onclick="leaveRoom()">Quitter</a>
 
 </body>
 </html>

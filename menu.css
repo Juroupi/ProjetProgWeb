@@ -36,6 +36,10 @@ input, select, button {
     font-size: inherit !important;
 }
 
+input {
+    min-width: 0;
+}
+
 input[type=submit], button {
     padding: 0.2em 1.5em;
 }

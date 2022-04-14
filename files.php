@@ -1,9 +1,9 @@
 <?php
-	
+
 	function open_file($name) {
-        $tmp = fopen($name . ".tmp", "w");
-        flock($tmp, LOCK_EX);
-        return array("tmp" => $tmp, "name" => $name, "content" => json_decode(file_get_contents($name), true), "modified" => false);
+        $fp = fopen($name, "r+");
+        flock($fp, LOCK_EX);
+        return array("fp" => $fp, "content" => json_decode(fread($fp, filesize($name)), true), "modified" => false);
 	}
 
 	function get_file_content(&$file) {
@@ -17,10 +17,11 @@
 
 	function close_file(&$file) {
 		if ($file["modified"]) {
-			file_put_contents($file["name"], json_encode($file["content"]));
+			ftruncate($file["fp"], 0);
+			fseek($file["fp"], 0);
+			fwrite($file["fp"], json_encode($file["content"]));
 		}
-		flock($file["tmp"], LOCK_UN);
-		fclose($file["tmp"]);
-		@unlink($file["name"] . ".tmp");
+		flock($file["fp"], LOCK_UN);
+		fclose($file["fp"]);
 	}
 ?>

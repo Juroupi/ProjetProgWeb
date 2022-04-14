@@ -10,14 +10,18 @@ html, body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-body > div:nth-child(2) {
-    display: flex;
-    flex-grow: 3;
+#game-grid {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 20% 60% 20%;
+    height: 90vmin;
+    width: 90vmin;
 }
 
 #tapis {
@@ -28,17 +32,20 @@ body > div:nth-child(2) {
 }
 
 #joueur_haut, #joueur_bas, #joueur_gauche, #joueur_droite {
-    flex-grow: 1;
     display: flex;
+    flex-grow: 1;
     flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
 }
 
-#joueur_haut > .cartes, #joueur_bas > .cartes, #joueur_gauche > .cartes, #joueur_droite > .cartes, #tapis {
+#tapis {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-grow: 1;
     flex-shrink: 0;
+    border-radius: 50%;
+    margin: 5vmin;
 }
 
 #pioche {
@@ -46,68 +53,90 @@ body > div:nth-child(2) {
     margin-right: 1em;
 }
 
-#joueur_gauche .carte, #joueur_droite .carte {
-    height: 50px;
+#pioche:hover {
+    transform: scale(1.05);
 }
 
-#joueur_haut .carte, #joueur_bas .carte {
-    width: 50px;
+#joueur_gauche .carte, #joueur_droite .carte {
+    height: 2vmin;
+    width: 12vmin;
+}
+
+#joueur_haut .carte {
+    width: 2vmin;
+    height: 12vmin;
+}
+
+#joueur_bas .carte {
+    width: 6vmin;
+    height: 12vmin;
+    z-index: 100;
 }
 
 .carte {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.1s ease-out, margin-right 0.1s ease-out;
+}
+
+.carte > * {
+    height: 15vmin;
+    user-select: none;
 }
 
 #joueur_bas .carte:hover {
-    z-index: 100;
-    /*transform: translateY(-50px);*/
+    /*z-index: 200;*/
+    transform: translateY(-0.5vmin);
+    cursor: pointer;
+    margin-right: 2vmin;
 }
 
-#joueur_haut {
+/*#joueur_haut {
     background-color: red;
-}
+}*/
 
 #joueur_haut img {
     transform: rotate(180deg);
 }
 
-#joueur_bas {
+/*#joueur_bas {
     background-color: blue;
-}
+}*/
 
 #joueur_gauche {
-    background-color: green;
+    /*background-color: green;*/
+    flex-direction: column;
 }
 
 #joueur_gauche img {
     transform: rotate(90deg);
 }
 
-#joueur_gauche > .cartes {
-    flex-direction: column;
-}
-
 #joueur_droite {
-    background-color: yellow;
+    /*background-color: yellow;*/
+    flex-direction: column;
 }
 
 #joueur_droite img {
     transform: rotate(-90deg);
 }
 
-#joueur_droite > .cartes {
-    flex-direction: column;
+#leave-button {
+    z-index: 100;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    padding: 0.5em 1em;
 }
 
 #chat {
     z-index: 100;
     position: absolute;
-    width: 30em;
-    height: 20em;
-    color: white;
-    background: rgba(40, 40, 40, 0.5);
+    width: 25em;
+    height: 15em;
+    color: black;
+    background: rgba(255, 255, 255, 0.75);
     right: 0.5em;
     bottom: 0.5em;
     display: flex;
@@ -117,10 +146,12 @@ body > div:nth-child(2) {
 #chat-toggle {
     font-size: 1.5em;
     position: absolute;
-    top: 0;
+    top: 0.1em;
     right: 0.25em;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-items: center;
 }
 
 #chat > *:nth-child(2) {
@@ -136,11 +167,11 @@ body > div:nth-child(2) {
 #messages {
     flex-grow: 1;
     overflow: auto;
-    padding: 0.5em;
+    margin: 0.5em 2.25em 0 0.5em;
 }
 
 #message-submit {
-    margin-right: 1.55em;
+    margin-right: 1.75em;
 }
 
 .message {
@@ -153,4 +184,8 @@ body > div:nth-child(2) {
 
 .message-id::after {
     content: " : ";
+}
+
+.message-content {
+    word-wrap: break-word;
 }

@@ -44,6 +44,9 @@
 
         file_put_contents("data/rooms/" . $roomid . ".json", '{ "players": { "' . $playerid . '": {} } }');
 
+        include "history.php";
+        addToHistory($playerid, $name, $mode, $roomid);
+
         if (isset($_SESSION["room-id"])) {
             include "leave_room.php";
         }

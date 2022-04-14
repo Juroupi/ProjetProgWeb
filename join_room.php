@@ -37,6 +37,9 @@
                 close_file($room_file);
                 close_file($rooms_file);
 
+                include "history.php";
+                addToHistory($playerid, $rooms_infos[$i]["name"], $mode, $roomid);
+
                 if (isset($_SESSION["room-id"]) && $_SESSION["room-id"] != $roomid) {
                     include "leave_room.php";
                 }
