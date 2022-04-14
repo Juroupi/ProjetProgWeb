@@ -14,8 +14,10 @@
 
             array_push($room["messages"], [ $name, $content ]);
 
-            set_file_content($room_file, $room);
+            return true;
         }
+
+        return false;
     }
 
     session_start();
@@ -30,22 +32,10 @@
         $room_file = open_file($room_filename);
         $room = get_file_content($room_file);
 
-        if (!isset($room["tour"])) {
-            $room["tour"] = $playerid;
-            unset($room["message-tour"]);
-        }
-        $joueur_suivant = false;
-
-        if (!isset($room["pile"])) {
-            $room["pile"] = [];
-        }
+        $save_file = false;
 
         if (!isset($room["messages"])) {
             $room["messages"] = [];
-        }
-
-        if (!isset($room["sens"])) {
-            $room["sens"] = true;
         }
 
         if (!isset($room["players"][$playerid])) {
@@ -57,9 +47,48 @@
             $room["players"][$playerid]["cards"] = [];
         }
 
+        // initialisation de la partie si ce n'est pas encore fait
+        if (!isset($room["deck"]) || !isset($room["pile"])) {
+
+            $room["commence"] = true;
+
+            $room["deck"] = [];
+
+            $colors = array("blue", "green", "red", "yellow");
+
+            foreach ($colors as $color) {
+                array_push($room["deck"], $color . "_0");
+                for ($i = 0; $i < 2; $i++) {
+                    for ($n = 1; $n <= 9; $n++) {
+                        array_push($room["deck"], $color . "_" . $n);
+                    }
+                    array_push($room["deck"], $color . "_picker");
+                    array_push($room["deck"], $color . "_reverse");
+                    array_push($room["deck"], $color . "_skip");
+                }
+                array_push($room["deck"], "wild_pick_four");
+                array_push($room["deck"], "wild_color_changer");
+            }
+
+            shuffle($room["deck"]);
+
+            // on pose la première carte
+            $premiere = 0;
+            foreach ($room["deck"] as $i => $carte) {
+                if (ctype_digit(substr($carte, -1))) {
+                    $premiere = $i;
+                    break;
+                }
+            }
+            $room["pile"] = [ $room["deck"][$premiere] ];
+            array_splice($room["deck"], $premiere, 1);
+
+            $save_file = true;
+        }
+
         // envoyer un message
         if (isset($_REQUEST["message"])) {
-            addMessage($room_file, $room, $playername, $_REQUEST["message"]);
+            $save_file = addMessage($room_file, $room, $playername, $_REQUEST["message"]);
         } 
         
         // récupérer les nouveaux messages
@@ -81,73 +110,44 @@
             }
         }
 
-        // jouer une carte si c'est notre tour
-        else if (isset($_REQUEST["play-card"]) && $room["tour"] == $playerid) {
+        // jouer une carte
+        else if (isset($_REQUEST["play-card"])) {
 
             $card = $_REQUEST["play-card"];
 
             include_once "rules.php";
 
-            if ($card < count($room["players"][$playerid]["cards"]) && check_rules($room, $card)) {
+            if ($card < count($room["players"][$playerid]["cards"])) {
 
-                array_push($room["pile"], $room["players"][$playerid]["cards"][$card]);
+                $play_card = $room["players"][$playerid]["cards"][$card];
 
-                array_splice($room["players"][$playerid]["cards"], $card, 1);
-
-                $joueur_suivant = true;
+                if (valid_move($room, $play_card)) {
+    
+                    array_push($room["pile"], $play_card);
+    
+                    array_splice($room["players"][$playerid]["cards"], $card, 1);
+    
+                    $save_file = true;
+                }
             }
         }
 
-        // piocher une carte si c'est notre tour
-        else if (isset($_REQUEST["pick-card"]) && $room["tour"] == $playerid) {
-
-            // creation de la pioche si elle n'est pas définie
-            if (!isset($room["deck"])) {
-
-                $room["deck"] = [];
-
-                $colors = array("blue", "green", "red", "yellow");
-
-                foreach ($colors as $color) {
-                    array_push($room["deck"], $color . "_0");
-                    for ($i = 0; $i < 2; $i++) {
-                        for ($n = 1; $n <= 9; $n++) {
-                            array_push($room["deck"], $color . "_" . $n);
-                        }
-                        array_push($room["deck"], $color . "_picker");
-                        array_push($room["deck"], $color . "_reverse");
-                        array_push($room["deck"], $color . "_skip");
-                    }
-                    array_push($room["deck"], "wild_pick_four");
-                    array_push($room["deck"], "wild_color_changer");
-                }
-
-                shuffle($room["deck"]);
-            }
+        // piocher une carte
+        else if (isset($_REQUEST["pick-card"])) {
 
             // si la pioche est vide, on la remplie avec la pile
-            else if (empty($room["deck"]) && count($room["pile"]) > 1) {
+            if (empty($room["deck"]) && count($room["pile"]) > 1) {
                 $room["deck"] = array_slice($room["pile"], 0, -1);
                 $room["pile"] = [ $room["pile"][count($room["pile"]) - 1] ];
             }
 
             // on retire la carte de la pioche et on la donne au joueur
             if (!empty($room["deck"])) {
-                
-                $nombre_cartes = 1;
-
-                if (!isset($room["players"][$playerid]["deja-joue"])) {
-                    $nombre_cartes = 7;
-                    $room["players"][$playerid]["deja-joue"] = true;
-                }
-
-                for ($i = 0; $i < $nombre_cartes; $i++) {
-                    array_push($room["players"][$playerid]["cards"], $room["deck"][0]);
-                    array_splice($room["deck"], 0, 1);
-                }
+                array_push($room["players"][$playerid]["cards"], $room["deck"][0]);
+                array_splice($room["deck"], 0, 1);
             }
 
-            $joueur_suivant = true;
+            $save_file = true;
         }
 
         // récupérer l'état du jeu
@@ -178,46 +178,7 @@
             echo '}';
         }
 
-        // gestion des tours
-        if ($joueur_suivant || !isset($room["players"][$room["tour"]])) {
-
-            $players_id = array_keys($room["players"]);
-            $next_player_id = false;
-            sort($players_id);
-            if ($room["sens"]) {
-                foreach ($players_id as $id) {
-                    if (strcmp($id, $room["tour"]) > 0) {
-                        $next_player_id = $id;
-                    }
-                }
-            } else {
-                foreach ($players_id as $id) {
-                    if (strcmp($id, $room["tour"]) < 0) {
-                        $next_player_id = $id;
-                    }
-                }
-            }
-
-            if ($next_player_id == false) {
-                if ($room["sens"]) {
-                    $room["tour"] = $players_id[0];
-                } else {
-                    $room["tour"] = $players_id[count($players_id) - 1];
-                }
-            }
-            else {
-                $room["tour"] = $next_player_id;
-            }
-
-            unset($room["message-tour"]);
-
-            set_file_content($room_file, $room);
-        }
-
-        // affichage du message de tour
-        if (!isset($room["message-tour"]) && $playerid == $room["tour"]) {
-            $room["message-tour"] = true;
-            addMessage($room_file, $room, "serveur", "c'est le tour de " . $playername);
+        if ($save_file) {
             set_file_content($room_file, $room);
         }
 
