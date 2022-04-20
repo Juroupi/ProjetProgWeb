@@ -44,9 +44,12 @@ function setCards(playername, names) {
 
 function setOthersCards(others) {
     let othernames = [ "joueur_haut", "joueur_gauche", "joueur_droit" ];
-    let n = Math.min(others.length, othernames.length);
-    for (let i = 0; i < n; i++) {
-        setCards(othernames[i], Array(Math.min(others[i], 15)).fill("card_back"));
+    for (let i = 0; i < othernames.length; i++) {
+        if (i < others.length) {
+            setCards(othernames[i], Array(Math.min(others[i], 15)).fill("card_back"));
+        } else {
+            setCards(othernames[i], []);
+        }
     }
 }
 
@@ -66,6 +69,7 @@ function envoyer_message() {
     let messageInput = $("#message-input");
     let content = messageInput.prop("value");
     if (content.length > 0) {
+        traiter_message(content);
         $.ajax("update.php", {
             method : "GET",
             dataType: "json",
@@ -113,6 +117,14 @@ function toggleChat() {
     }
 }
 
+function traiter_message(content) {
+
+    if (content == "tacos") {
+        tacos(20);
+    }
+}
+
+
 window.onload = () => {
 
     update();
@@ -150,3 +162,10 @@ function Couleur(type){
    }
 }
 
+function tacos(n) {
+
+    for (let i = 0; i < n; i++) {
+
+
+    }
+}

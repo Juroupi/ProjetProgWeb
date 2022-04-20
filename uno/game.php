@@ -66,7 +66,7 @@
         <div id="chat-toggle" onclick="toggleChat()">▼</div>
     </div>
 
-    <a id="leave-button" class="clickable" href="../leave_room.php?redirect" onclick="leaveRoom()">Quitter</a>
+    <a id="leave-button" class="clickable" href="update.php?leave_room">Quitter</a>
 
 </body>
 </html>

@@ -33,6 +33,7 @@
         $room = get_file_content($room_file);
 
         $save_file = false;
+        $leave_room = false;
 
         if (!isset($room["messages"])) {
             $room["messages"] = [];
@@ -179,11 +180,22 @@
             echo '}';
         }
 
+        // quitter la salle
+        else if (isset($_REQUEST["leave_room"])) {
+            $room["deck"] = array_merge($room["players"][$playerid]["cards"], $room["deck"]);
+            shuffle($room["deck"]);
+            $save_file = true;
+            $leave_room = true;
+        }
+
         if ($save_file) {
             set_file_content($room_file, $room);
         }
 
         close_file($room_file);
-    }
 
+        if ($leave_room) {
+            header("Location: ../leave_room.php?redirect");
+        }
+    }
 ?>
