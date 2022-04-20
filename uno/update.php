@@ -144,6 +144,7 @@
             // on retire la carte de la pioche et on la donne au joueur
             if (!empty($room["deck"])) {
                 array_push($room["players"][$playerid]["cards"], $room["deck"][0]);
+                sort($room["players"][$playerid]["cards"]);
                 array_splice($room["deck"], 0, 1);
             }
 
