@@ -25,8 +25,13 @@
                 $mode = $rooms_infos[$i]["mode"];
                 $players_lim = $modes[$mode]["limit"];
 
-                if (!isset($room_content["players"][$playerid]) && $players_num < $players_lim) {
+                if ($players_num >= $players_lim) {
+                    close_file($room_file);
+                    break;
+                }
 
+                if (!isset($room_content["players"][$playerid])) {
+                    
                     $rooms_infos[$i]["players"] = $players_num + 1;
                     $room_content["players"][$playerid] = new stdClass();
 

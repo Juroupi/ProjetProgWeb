@@ -1,5 +1,8 @@
 {
 	"UNO": {
 		"limit": 4
+	},
+	"jeu_nul": {
+		"limit": 2
 	}
 }
