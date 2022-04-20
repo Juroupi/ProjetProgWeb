@@ -192,6 +192,11 @@ function tacos(n) {
         taco.style.width = "auto";
         taco.style.opacity = "50%";
         taco.style.transition = "top " + time + "ms linear";
+        taco.style.animationDelay = Math.random() * 200;
+        taco.style.animationDuration = (Math.random() * 1 + 0.75) + "s";
+        if (Math.random() > 0.5) {
+            taco.style.animationDirection = "reverse";
+        }
         body.appendChild(taco);
 
         setTimeout(() => {
