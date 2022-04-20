@@ -10,7 +10,7 @@
 
         $content = strip_tags($msg);
 
-        if (count($content) > 0) {
+        if (strlen($content) > 0) {
 
             array_push($room["messages"], [ $name, $content ]);
 
@@ -46,6 +46,8 @@
 
         if (!isset($room["players"][$playerid]["cards"])) {
             $room["players"][$playerid]["cards"] = [];
+            addMessage($room_file, $room, "serveur", $playername . " a rejoint");
+            $save_file = true;
         }
 
         // initialisation de la partie si ce n'est pas encore fait
@@ -184,6 +186,7 @@
         else if (isset($_REQUEST["leave_room"])) {
             $room["deck"] = array_merge($room["players"][$playerid]["cards"], $room["deck"]);
             shuffle($room["deck"]);
+            addMessage($room_file, $room, "serveur", $playername . " a quitté");
             $save_file = true;
             $leave_room = true;
         }
