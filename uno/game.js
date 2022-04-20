@@ -119,8 +119,17 @@ function toggleChat() {
 
 function traiter_message(content) {
 
+    content = content.trim();
+
     if (content == "tacos") {
-        tacos(20);
+        tacos(30);
+    }
+
+    else if (content.startsWith("tacos ")) {
+        let n = Number(content.substr(6));
+        if (n != NaN) {
+            tacos(n);
+        }
     }
 }
 
@@ -164,8 +173,30 @@ function Couleur(type){
 
 function tacos(n) {
 
+    let body = document.getElementsByTagName("body")[0];
+
     for (let i = 0; i < n; i++) {
 
+        let taco = document.createElement("img");
+        taco.className = "taco";
+        taco.src = "useless/taco.png";
 
+        let height = (Math.random() * 75 + 25);
+        let time = Math.random() * 1000 + 1500;
+
+        taco.style.zIndex = "300";
+        taco.style.position = "absolute";
+        taco.style.top = "-" + height + "px";
+        taco.style.left = (Math.random() * 110 - 5) + "%";
+        taco.style.height = height + "px";
+        taco.style.width = "auto";
+        taco.style.opacity = "50%";
+        taco.style.transition = "top " + time + "ms linear";
+        body.appendChild(taco);
+
+        setTimeout(() => {
+            setTimeout(() => taco.style.top = (body.offsetHeight + height) + "px", 100);
+            setTimeout(() => taco.remove(), time + 100);
+        }, i * 50);
     }
 }
